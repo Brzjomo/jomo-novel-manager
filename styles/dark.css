@@ -1,0 +1,151 @@
+/* 暗色主题样式 */
+:root {
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #252526;
+    --border-color: #444;
+    --text-color: #bdbdbd;
+    --hover-bg: #2d2d2d;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-color);
+}
+
+.file-list {
+    background-color: #252526;
+    border: 1px solid #333;
+    border-right: 1px solid #444;
+}
+
+.preview-panel {
+    background-color: #252526;
+    border: 1px solid #333;
+    border: 1px solid #444;
+}
+
+.toolbar button {
+    background-color: #333;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+.toolbar button:hover {
+    background-color: #444;
+}
+
+.file-item {
+    background-color: #1e3b2f;
+    border: 1px solid #2e5834;
+}
+
+.file-item:hover {
+    background-color: #2a4a3d;
+}
+
+.file-item.selected {
+    background-color: #315941;
+    border-width: 2px;
+}
+
+.editor-path {
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+}
+
+.setting-title {
+    color: #fff;
+}
+
+select {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 5px;
+}
+
+select:focus {
+    border-color: #444;
+}
+
+select option:hover,
+select option:focus {
+    background-color: #444 !important;
+    color: #fff !important;
+}
+
+button {
+    background-color: #333;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #444;
+}
+
+.resizer {
+    background-color: #333;
+}
+
+.resizer:hover {
+    background-color: #444;
+}
+
+.folder-title:hover {
+    background-color: #2d2d2d;
+}
+
+.preview::selection {
+    background-color: #35503f;
+    color: #f1f1f1;
+}
+
+input[type="number"] {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 5px;
+}
+
+input[type="number"]:focus {
+    border-color: #444;
+    outline: none;
+}
+
+input[type="number"]::selection {
+    background-color: #35503f;
+    color: #f1f1f1;
+}
+
+/* 搜索框 */
+.search-box input {
+    background-color: #333;
+    border-color: #444;
+    color: #fff;
+}
+
+.search-box input:focus {
+    border-color: #444;
+    outline: none;
+}
+
+/* 提示框 */
+.tooltip {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #666;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #444;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+} 

@@ -1,0 +1,52 @@
+{
+  "name": "jomo-novel-manager",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
+    "build": "cross-env NODE_ENV=production electron-builder"
+  },
+  "author": "Brzjomo",
+  "license": "MIT",
+  "description": "一个简单易用的本地小说管理工具，帮助你更好地组织和管理 TXT 格式的小说。",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.6.3"
+  },
+  "type": "module",
+  "build": {
+    "appId": "com.github.brzjomo.jomo-novel-manager",
+    "asar": true,
+    "files": [
+      "styles/default.css",
+      "styles/light.css", 
+      "styles/dark.css",
+      "icon.ico",
+      "index.html",
+      "main.js",
+      "renderer.js",
+      "settings.html",
+      "settings.js",
+      "package.json"
+    ],
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

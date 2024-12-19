@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JOMO小说管理工具</title>
+    <link rel="stylesheet" href="styles/default.css">
+    <link rel="stylesheet" href="styles/light.css" id="theme-style">
+</head>
+<body>
+    <div class="container">
+        <div class="file-list">
+            <div class="toolbar">
+                <button id="selectDir">选择目录</button>
+                <button id="toggleView">切换视图</button>
+                <button id="settings">设置</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索文件...">
+                <button id="clearSearch">✕</button>
+            </div>
+            <div id="fileTree"></div>
+            <div class="resizer" id="resizer"></div>
+        </div>
+        <div class="content-view">
+            <div class="preview" id="preview"></div>
+            <div class="actions">
+                <button id="download">下载文件</button>
+                <button id="openFile">打开文件</button>
+                <button id="showInFolder">在资源管理器中显示</button>
+            </div>
+        </div>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+</html> 

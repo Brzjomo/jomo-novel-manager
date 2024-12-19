@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>设置</title>
+    <link rel="stylesheet" href="styles/default.css">
+    <link rel="stylesheet" href="styles/light.css" id="theme-style">
+</head>
+<body>
+    <div class="setting-group">
+        <div class="setting-title">文本编辑器设置</div>
+        <div id="editorPath" class="editor-path">
+            未设置（使用系统默认编辑器）
+        </div>
+        <div class="button-group">
+            <button id="selectEditor">选择编辑器</button>
+            <button id="resetEditor">重置为默认</button>
+        </div>
+    </div>
+    <div class="setting-item">
+        <label>显示主题：</label>
+        <select id="themeSelect">
+            <option value="light">浅色主题</option>
+            <option value="dark">深色主题</option>
+        </select>
+    </div>
+    <div class="setting-item">
+        <label>预览文本长度：</label>
+        <input type="number" 
+               id="previewLength" 
+               min="100" 
+               max="10000" 
+               step="100"
+               style="width: 100px;">
+        <span>字</span>
+        <span class="tooltip-trigger">ℹ️
+            <span class="tooltip">支持范围：100-10000字</span>
+        </span>
+    </div>
+    <script src="settings.js"></script>
+</body>
+</html> 
