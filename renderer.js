@@ -162,6 +162,32 @@ document.addEventListener('DOMContentLoaded', () => {
             return acc;
         }, []);
     }
+
+    // 添加滚动到顶部功能
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const fileTree = document.getElementById('fileTree');
+
+    // 监听文件树的滚动事件
+    fileTree.addEventListener('scroll', () => {
+        // 当滚动超过300px时显示按钮
+        if (fileTree.scrollTop > 280) {
+            scrollTopBtn.style.display = 'flex';
+        } else {
+            scrollTopBtn.style.display = 'none';
+        }
+    });
+
+    // 点击按钮滚动到顶部
+    scrollTopBtn.addEventListener('click', () => {
+        fileTree.scrollTo({
+            top: 0,
+            behavior: 'smooth'  // 平滑滚动
+        });
+    });
+
+    ipcRenderer.on('app-version', (event, version) => {
+        document.title = `JOMO小说管理工具 v${version}`;
+    });
 });
 
 // 阻止文本选择
@@ -201,13 +227,18 @@ ipcRenderer.on('files-list', (event, files) => {
 
 // 渲染文件预览
 ipcRenderer.on('file-preview', (event, content) => {
+    const previewElement = document.getElementById('preview');
+    
     // 如果返回的是错误消息且包含文件不存在的提示，刷新列表
     if (content.startsWith('文件读取失败：') && content.includes('ENOENT')) {
         loadFiles();
-        document.getElementById('preview').textContent = '文件已被删除';
+        previewElement.textContent = '文件已被删除';
         return;
     }
-    document.getElementById('preview').textContent = content;
+    
+    previewElement.textContent = content;
+    // 重置滚动位置到顶部
+    previewElement.scrollTop = 0;
 });
 
 function renderFileList(files, container) {

@@ -5,6 +5,7 @@ import { promises as fsPromises } from 'fs';
 import iconv from 'iconv-lite';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
+import { readFile } from 'fs/promises';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,6 +18,15 @@ const DEFAULT_SETTINGS = {
     theme: 'light', // 默认使用浅色主题
     previewLength: 1500 // 默认预览1500字
 };
+
+// 读取 package.json 获取版本号
+const packageJson = JSON.parse(
+    await readFile(
+        new URL('./package.json', import.meta.url),
+        'utf8'
+    )
+);
+const appVersion = packageJson.version;
 
 let mainWindow;
 let settingsWindow = null;
@@ -34,6 +44,9 @@ function createWindow() {
             contextIsolation: false
         }
     });
+
+    // 修改窗口标题，加上版本号
+    mainWindow.setTitle(`JOMO小说管理工具 v${appVersion}`);
 
     if (process.env.NODE_ENV === 'development') {
         mainWindow.webContents.openDevTools();
@@ -55,6 +68,7 @@ function createWindow() {
         // 发送初始设置
         const settings = loadSettings();
         mainWindow.webContents.send('init-settings', settings);
+        mainWindow.webContents.send('app-version', appVersion);
     });
 }
 
@@ -210,10 +224,17 @@ ipcMain.on('get-files', async (event, viewType) => {
 // 读取文件预览内容
 ipcMain.on('preview-file', async (event, filePath) => {
     try {
+        // 首先尝试 UTF-8
         let content = await fsPromises.readFile(filePath, 'utf8');
         
+        // 如果是乱码，尝试 GB2312
         if (containsGarbledText(content)) {
             content = await readFileWithEncoding(filePath, 'gb2312');
+            
+            // 如果还是乱码，尝试 UTF-16
+            if (containsGarbledText(content)) {
+                content = await readFileWithEncoding(filePath, 'utf16le');
+            }
         }
         
         // 处理不同系统的换行符
@@ -236,20 +257,40 @@ async function readFileWithEncoding(filePath, encoding) {
     
     if (encoding === 'gb2312') {
         return iconv.decode(buffer, 'gb2312');
+    } else if (encoding === 'utf16le') {
+        return iconv.decode(buffer, 'utf16le');
     }
     return buffer.toString(encoding);
 }
 
 function containsGarbledText(text) {
+    // 如果文本为空，返回 true 表示需要尝试其他编码
+    if (!text || text.length === 0) {
+        return true;
+    }
+
     // 检查是否包含常见乱码特征
     const garbledPattern = /[\uFFFD\u0000-\u0008\u000B-\u000C\u000E-\u001F]/;
     
     // 检查中文文本的合理性
     const chinesePattern = /[\u4e00-\u9fa5]/;
-    const chineseRatio = (text.match(/[\u4e00-\u9fa5]/g) || []).length / text.length;
+    const totalChars = text.length;
+    const chineseChars = (text.match(/[\u4e00-\u9fa5]/g) || []).length;
     
-    return garbledPattern.test(text) || 
-           (chinesePattern.test(text) && chineseRatio < 0.1); // 如果包含中文但中文比例过低，可能是乱码
+    // 计算可打印字符的数量（包括中文、英文字母、数字、常用标点）
+    const printableChars = (text.match(/[\u4e00-\u9fa5a-zA-Z0-9\s,.!?，。！？、：；""''（）《》\-]/g) || []).length;
+    
+    // 计算可打印字符比例
+    const printableRatio = printableChars / totalChars;
+    
+    // 如果文本包含中文
+    if (chinesePattern.test(text)) {
+        // 中文字符比例过低（小于5%）且可打印字符比例过低（小于60%）时，可能是乱码
+        return (chineseChars / totalChars < 0.05 && printableRatio < 0.6) || garbledPattern.test(text);
+    }
+    
+    // 如果文本不包含中文，主要检查可打印字符比例
+    return printableRatio < 0.6 || garbledPattern.test(text);
 }
 
 // 在默认编辑器中打开文件
