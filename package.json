@@ -1,11 +1,11 @@
 {
-  "name": "jomo-novel-manager",
-  "version": "1.0.1",
+  "name": "jomo_novel_manager",
+  "version": "1.0.2",
   "main": "main.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production electron .",
     "dev": "cross-env NODE_ENV=development electron .",
-    "build": "cross-env NODE_ENV=production electron-builder"
+    "build": "cross-env NODE_ENV=release electron-builder"
   },
   "author": "Brzjomo",
   "license": "MIT",
@@ -28,10 +28,14 @@
       "styles/default.css",
       "styles/light.css", 
       "styles/dark.css",
+      "styles/web-dark.css",
       "icon.ico",
       "index.html",
+      "web.html",
       "main.js",
+      "server.js",
       "renderer.js",
+      "web-renderer.js",
       "settings.html",
       "settings.js",
       "package.json"

@@ -1,0 +1,175 @@
+/* 基础样式 */
+body {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+}
+
+/* 按钮样式 */
+button {
+    background-color: #2d2d2d;
+    color: #d4d4d4;
+    border: 1px solid #404040;
+}
+
+button:hover {
+    background-color: #404040;
+}
+
+button:active {
+    background-color: #505050;
+}
+
+/* 文件列表样式 */
+.file-list {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;  /* 添加左右内边距 */
+    box-sizing: border-box;  /* 确保内边距计入宽度 */
+}
+
+.file-item {
+    background-color: #2d2d2d;
+    border: 1px solid #404040;
+    margin: 5px 0;  /* 增加上下间距 */
+    padding: 8px 12px;  /* 增加左右内边距 */
+    border-radius: 4px;  /* 添加圆角 */
+    white-space: normal;  /* 允许文本换行 */
+    word-break: break-all;  /* 在任意字符间断行 */
+    box-sizing: border-box;  /* 确保内边距计入宽度 */
+}
+
+.file-item:hover {
+    background-color: #404040;
+}
+
+.file-item.selected {
+    background-color: #094771;
+    border-color: #094771;
+}
+
+/* 搜索框样式 */
+.search-box {
+    padding: 0 2px;  /* 添加左右内边距 */
+    margin: 10px 0;  /* 增加上下间距 */
+    box-sizing: border-box;
+}
+
+.search-box input {
+    background-color: #2d2d2d;
+    color: #d4d4d4;
+    border-color: #404040;
+}
+
+.search-box input:focus {
+    border-color: #094771;
+}
+
+/* 预览窗口样式 */
+.preview-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.preview-content {
+    background-color: #1e1e1e;
+    border: 1px solid #404040;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.preview-header {
+    border-bottom: 1px solid #404040;
+}
+
+.preview-title {
+    color: #d4d4d4;
+}
+
+.preview-close {
+    color: #d4d4d4;
+    background: none;
+    border: none;
+}
+
+.preview-close:hover {
+    color: #ffffff;
+    background-color: #404040;
+}
+
+.preview-text {
+    color: #d4d4d4;
+    background-color: #1e1e1e;
+}
+
+.preview-footer {
+    border-top: 1px solid #404040;
+}
+
+/* 禁用状态的按钮 */
+button:disabled {
+    background-color: #252525;
+    color: #666666;
+    border-color: #333333;
+    cursor: not-allowed;
+}
+
+/* 文件夹图标和箭头 */
+.folder-icon {
+    color: #d4d4d4;
+}
+
+/* 目录项样式 */
+.directory-item {
+    color: #d4d4d4;
+}
+
+/* 容器背景 */
+.container {
+    background-color: #1e1e1e;
+}
+
+/* 工具栏背景 */
+.toolbar {
+    background-color: #1e1e1e;
+    padding: 10px 2px;  /* 添加左右内边距 */
+    box-sizing: border-box;
+}
+
+/* 文件夹样式 */
+.folder-title {
+    color: #d4d4d4;
+}
+
+.folder-title:hover {
+    background-color: #404040;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #424242;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4f4f4f;
+}
+
+/* 返回顶部按钮 */
+.scroll-top-btn {
+    background-color: #2d2d2d;
+    border: 1px solid #404040;
+}
+
+.scroll-top-btn:hover {
+    background-color: #404040;
+}
+
+.scroll-top-btn svg {
+    fill: #d4d4d4;
+}
+
+/* 分割线 */
+.resizer {
+    background: #404040;
+}

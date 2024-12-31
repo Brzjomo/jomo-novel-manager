@@ -135,7 +135,7 @@ function displayFilesTree(files, container) {
                 `;
             } else {
                 return `
-                    <div class="file-item" data-path="${item.path}" onclick="selectFile('${item.path}')">
+                    <div class="file-item" data-path="${item.path}" onclick="selectFile(\`${item.path}\`)">
                         ${item.name}
                     </div>
                 `;
@@ -152,8 +152,12 @@ async function selectFile(filePath) {
     const fileName = filePath.split('/').pop();
 
     try {
-        const response = await fetch(`${API_BASE}/preview/${encodeURIComponent(fileName)}`);
+        const response = await fetch(`${API_BASE}/preview?path=${encodeURIComponent(filePath)}`);
         const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || '预览失败');
+        }
         
         // 更新预览内容
         const previewElement = document.getElementById('preview');
@@ -184,7 +188,7 @@ async function selectFile(filePath) {
         previewElement.scrollTop = 0;
     } catch (error) {
         console.error('获取文件预览失败:', error);
-        alert('获取文件预览失败');
+        alert('获取文件预览失败: ' + error.message);
     }
 }
 
@@ -200,8 +204,7 @@ function downloadCurrentFile() {
         alert('请先选择一个文件');
         return;
     }
-    const fileName = currentFilePath.split('/').pop();
-    window.location.href = `${API_BASE}/download/${encodeURIComponent(fileName)}`;
+    window.location.href = `${API_BASE}/download?path=${encodeURIComponent(currentFilePath)}`;
 }
 
 // 搜索功能
@@ -255,4 +258,26 @@ function scrollToTop() {
         top: 0,
         behavior: 'smooth'
     });
+}
+
+// 预览文件
+async function previewFile(filePath) {
+    try {
+        const response = await fetch(`/api/preview?path=${encodeURIComponent(filePath)}`);
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || '预览失败');
+        }
+        
+        // 显示预览内容
+        const previewElement = document.getElementById('preview');
+        previewElement.textContent = data.preview;
+        previewElement.scrollTop = 0;  // 滚动到顶部
+    } catch (error) {
+        console.error('预览文件失败:', error);
+        // 显示错误信息
+        const previewElement = document.getElementById('preview');
+        previewElement.textContent = `预览失败: ${error.message}`;
+    }
 } 

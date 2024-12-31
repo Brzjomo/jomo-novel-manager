@@ -6,7 +6,7 @@ import iconv from 'iconv-lite';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { readFile } from 'fs/promises';
-import { NovelServer } from './src/main/server.js';
+import { NovelServer } from './server.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,7 +48,7 @@ function createWindow() {
     });
 
     // 修改窗口标题，加上版本号
-    mainWindow.setTitle(`JOMO小说管理工具 v${appVersion}`);
+    mainWindow.setTitle(`${APP_NAME} v${appVersion}`);
 
     if (process.env.NODE_ENV === 'development') {
         mainWindow.webContents.openDevTools();

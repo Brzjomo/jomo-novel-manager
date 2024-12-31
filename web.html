@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOMO小说管理工具 - Web版</title>
     <link rel="stylesheet" href="styles/default.css">
-    <link rel="stylesheet" href="styles/light.css" id="theme-style">
+    <link rel="stylesheet" href="styles/web-dark.css">
     <style>
         /* 移动端适配样式 */
         @media (max-width: 768px) {
@@ -15,7 +15,7 @@
             
             .file-list {
                 width: 100% !important;
-                max-width: 100%;
+                max-width: 98%;
                 height: 100%;
             }
             
@@ -69,20 +69,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             padding: 20px;
             box-sizing: border-box;
         }
 
         .preview-content {
-            background: white;
             width: 80%;
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: relative;
             max-height: 80vh;
             display: flex;
@@ -95,7 +92,6 @@
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
         }
 
         .preview-title {
@@ -105,16 +101,9 @@
         }
 
         .preview-close {
-            background: none;
-            border: none;
             font-size: 24px;
             cursor: pointer;
-            padding: 0;
-            color: #666;
-        }
-
-        .preview-close:hover {
-            color: #333;
+            padding: 10px 16px;
         }
 
         .preview-text {
@@ -131,7 +120,6 @@
             display: flex;
             justify-content: flex-end;
             padding-top: 15px;
-            border-top: 1px solid #eee;
             margin-top: 15px;
         }
 
@@ -174,6 +162,6 @@
         </div>
     </div>
 
-    <script src="web-renderer.js"></script>
+    <script src="./web-renderer.js"></script>
 </body>
 </html> 
