@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOMO小说管理工具 - Web版</title>
+    <link rel="stylesheet" href="styles/default.css">
+    <link rel="stylesheet" href="styles/light.css" id="theme-style">
+    <style>
+        /* 移动端适配样式 */
+        @media (max-width: 768px) {
+            .container {
+                height: 100vh;
+            }
+            
+            .file-list {
+                width: 100% !important;
+                max-width: 100%;
+                height: 100%;
+            }
+            
+            .toolbar button {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            #fileTree {
+                height: calc(100vh - 100px);
+            }
+
+            .preview-modal {
+                padding: 10px;
+            }
+
+            .preview-content {
+                width: 95%;
+                margin: 10px auto;
+            }
+        }
+        
+        /* 通用样式优化 */
+        .container {
+            flex-direction: column;
+        }
+
+        .file-list {
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .file-item {
+            padding: 8px;
+            font-size: 14px;
+        }
+        
+        .toolbar {
+            position: sticky;
+            top: 0;
+            background: inherit;
+            z-index: 100;
+            padding: 10px 0;
+        }
+
+        /* 预览窗口样式 */
+        .preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .preview-content {
+            background: white;
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .preview-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .preview-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            color: #666;
+        }
+
+        .preview-close:hover {
+            color: #333;
+        }
+
+        .preview-text {
+            font-size: 16px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* 移除原来的分割线 */
+        .resizer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="file-list">
+            <div class="toolbar">
+                <button id="toggleView">切换视图</button>
+                <button id="download" disabled>下载</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索文件...">
+                <button id="clearSearch">✕</button>
+            </div>
+            <div id="fileTree"></div>
+            <button id="scrollTopBtn" class="scroll-top-btn" title="返回顶部">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <path d="m12 6.586-8.707 8.707 1.414 1.414L12 9.414l7.293 7.293 1.414-1.414L12 6.586z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- 预览窗口 -->
+    <div class="preview-modal" id="previewModal">
+        <div class="preview-content">
+            <div class="preview-header">
+                <h3 class="preview-title" id="previewTitle"></h3>
+                <button class="preview-close" id="previewClose">&times;</button>
+            </div>
+            <div class="preview-text" id="preview"></div>
+        </div>
+    </div>
+
+    <script src="web-renderer.js"></script>
+</body>
+</html> 

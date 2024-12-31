@@ -6,6 +6,7 @@ import iconv from 'iconv-lite';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { readFile } from 'fs/promises';
+import { NovelServer } from './src/main/server.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,6 +33,7 @@ let mainWindow;
 let settingsWindow = null;
 let currentNovelPath = '';
 let fileWatcher = null;
+let novelServer = null;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -60,7 +62,7 @@ function createWindow() {
     mainWindow.loadFile('index.html');
 
     // 窗口加载完成后尝试加载上次的目录和设置
-    mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.on('did-finish-load', async () => {
         const lastDir = loadLastDirectory();
         if (lastDir) {
             mainWindow.webContents.send('directory-selected', lastDir);
@@ -69,6 +71,17 @@ function createWindow() {
         const settings = loadSettings();
         mainWindow.webContents.send('init-settings', settings);
         mainWindow.webContents.send('app-version', appVersion);
+
+        // 初始化并启动web服务器
+        if (!novelServer) {
+            novelServer = new NovelServer(settings, currentNovelPath);
+            try {
+                await novelServer.start();
+                console.log('Web服务器已启动');
+            } catch (error) {
+                console.error('Web服务器启动失败:', error);
+            }
+        }
     });
 }
 
@@ -158,6 +171,11 @@ ipcMain.on('select-directory', async (event) => {
                 dirPath
             );
             event.reply('directory-selected', dirPath);
+
+            // 更新web服务器的目录
+            if (novelServer) {
+                novelServer.updateNovelPath(dirPath);
+            }
 
             // 移除旧的监视器
             if (fileWatcher) {
@@ -437,6 +455,12 @@ ipcMain.on('update-settings', (event, newSettings) => {
     // 合并设置
     const settings = { ...currentSettings, ...newSettings };
     saveSettings(settings);
+    
+    // 更新web服务器的设置
+    if (novelServer) {
+        novelServer.updateSettings(settings);
+    }
+    
     // 通知所有窗口更新设置
     BrowserWindow.getAllWindows().forEach(win => {
         win.webContents.send('settings-updated', settings);
