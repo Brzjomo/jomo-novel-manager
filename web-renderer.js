@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = `http://${window.location.hostname}:3000/api`;
 let currentFilePath = null;
 let currentViewType = 'list'; // 或 'tree'
 
@@ -70,7 +70,7 @@ function setupTouchEvents() {
 function toggleView() {
     currentViewType = currentViewType === 'list' ? 'tree' : 'list';
     const button = document.getElementById('toggleView');
-    button.textContent = currentViewType === 'list' ? '切换到树形视图' : '切换到列表视图';
+    button.textContent = currentViewType === 'list' ? '切换视图' : '切换视图';
     refreshFileList();
 }
 
