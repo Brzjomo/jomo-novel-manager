@@ -155,9 +155,16 @@ async function selectFile(filePath) {
         const response = await fetch(`${API_BASE}/preview/${encodeURIComponent(fileName)}`);
         const data = await response.json();
         
-        document.getElementById('preview').textContent = data.preview;
+        // 更新预览内容
+        const previewElement = document.getElementById('preview');
+        previewElement.textContent = data.preview;
+        
+        // 更新标题
         document.getElementById('previewTitle').textContent = fileName;
-        document.getElementById('previewModal').style.display = 'block';
+        
+        // 显示预览窗口
+        const previewModal = document.getElementById('previewModal');
+        previewModal.style.display = 'block';
         
         // 高亮选中的文件
         document.querySelectorAll('.file-item').forEach(item => {
@@ -172,8 +179,12 @@ async function selectFile(filePath) {
 
         // 禁止背景滚动
         document.body.style.overflow = 'hidden';
+
+        // 滚动预览内容到顶部
+        previewElement.scrollTop = 0;
     } catch (error) {
         console.error('获取文件预览失败:', error);
+        alert('获取文件预览失败');
     }
 }
 

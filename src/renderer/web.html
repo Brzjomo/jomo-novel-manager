@@ -85,7 +85,8 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: relative;
             max-height: 80vh;
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .preview-header {
@@ -121,6 +122,17 @@
             line-height: 1.6;
             white-space: pre-wrap;
             word-wrap: break-word;
+            overflow-y: auto;
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .preview-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
         }
 
         /* 移除原来的分割线 */
@@ -134,7 +146,6 @@
         <div class="file-list">
             <div class="toolbar">
                 <button id="toggleView">切换视图</button>
-                <button id="download" disabled>下载</button>
             </div>
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="搜索文件...">
@@ -157,6 +168,9 @@
                 <button class="preview-close" id="previewClose">&times;</button>
             </div>
             <div class="preview-text" id="preview"></div>
+            <div class="preview-footer">
+                <button id="download" disabled>下载文件</button>
+            </div>
         </div>
     </div>
 
